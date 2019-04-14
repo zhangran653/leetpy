@@ -1,3 +1,6 @@
+from collections import deque
+
+
 class BST:
     class _Node:
         def __init__(self, e):
@@ -70,6 +73,131 @@ class BST:
         print(node.e)
         self._pre_order(node.left)
         self._pre_order(node.right)
+
+    def pre_order_nr(self):
+        stack = []
+        stack.append(self._root)
+        while stack:
+            cur = stack.pop()
+            print(cur)
+            if cur.right:
+                stack.append(cur.right)
+            if cur.left:
+                stack.append(cur.left)
+
+    def in_order(self):
+        self._in_order(self._root)
+
+    def _in_order(self, node):
+        if not node:
+            return
+        self._in_order(node.left)
+        print(node.e)
+        self._in_order(node.right)
+
+    def post_order(self):
+        self._post_order(self._root)
+
+    def _post_order(self, node):
+        if not node:
+            return
+        self._post_order(node.left)
+        self._post_order(node.right)
+        print(node.e)
+
+    def level_order(self):
+        queue = deque()
+        queue.append(self._root)
+        while queue:
+            cur = queue.popleft()
+            print(cur)
+            if cur.left:
+                queue.append(cur.left)
+            if cur.right:
+                queue.append(cur.right)
+
+    def minimum(self):
+        if self._size == 0:
+            raise ValueError('BST empty')
+        return self._minimum(self._root)
+
+    def _minimum(self, node):
+        if not node.left:
+            return node
+        return self._minimum(node.left)
+
+    def maximum(self):
+        if self._size == 0:
+            raise ValueError('BST empty')
+        return self._maximum(self._root)
+
+    def _maximum(self, node):
+        if not node.right:
+            return node
+        return self._maximum(node.right)
+
+    def remove_min(self):
+        ret = self.minimum()
+        self._root = self._remove_min(self._root)
+        return ret
+
+    def _remove_min(self, node):
+        if not node.left:
+            right_node = node.right
+            node.right = None
+            self._size -= 1
+            return right_node
+
+        node.left = self._remove_min(node.left)
+        return node
+
+    def remove_max(self):
+        ret = self.maximum()
+        self._root = self._remove_max(self._root)
+        return ret
+
+    def _remove_max(self, node):
+        if not node.right:
+            left_node = node.left
+            node.left = None
+            self._size -= 1
+            return left_node
+
+        node.right = self._remove_max(node.right)
+        return node
+
+    def remove(self, e):
+        self._remove(self._root, e)
+
+    def _remove(self, node, e):
+        if not node:
+            return None
+        if node.e > e:
+            node.left = self._remove(node.left, e)
+            self._size -= 1
+            return node
+        if node.e < e:
+            node.right = self._remove(node.right, e)
+            self._size -= 1
+            return node
+        else:
+            if not node.left:
+                right_node = node.right
+                node.right = None
+                self._size -= 1
+                return right_node
+            elif not node.right:
+                left_node = node.left
+                node.left = None
+                self._size -= 1
+                return left_node
+            else:
+
+                successor = self.minimum(node.right)
+                successor.right = self._remove_min(node.right)
+                successor.left = node.left
+                node.left, node.right = None
+                return node
 
     def _generate_depth_string(self, depth):
         res = ''
