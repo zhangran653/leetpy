@@ -98,6 +98,11 @@ class Array:
             new_data[i] = self._data[i]
         self._data = new_data
 
+    def swap(self, i, j):
+        if i < 0 or i >= self._size or j < 0 or j >= self._size:
+            raise ValueError('Index is illegal.')
+        self._data[i], self._data[j] = self._data[j], self._data[i]
+
 
 if __name__ == '__main__':
     a = Array(10)
