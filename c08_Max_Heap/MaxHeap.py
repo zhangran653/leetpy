@@ -2,7 +2,12 @@ from c02_Array.array import Array
 
 
 class MaxHeap:
-    def __init__(self, capacity=None):
+    def __init__(self, arr=None, capacity=None):
+        if isinstance(arr, Array):
+            self._data = arr
+            for i in range(self._parent(arr.get_size() - 1), -1, -1):
+                self._sift_down(i)
+            return
         if not capacity:
             self._data = Array()
         else:
@@ -60,6 +65,13 @@ class MaxHeap:
                 break
             self._data.swap(k, j)
             k = j
+
+    def replace(self, e):
+        ret = self.find_max()
+        # 这样可以一次logn完成
+        self._data.set(0, e)
+        self._sift_down(0)
+        return ret
 
 
 if __name__ == '__main__':
