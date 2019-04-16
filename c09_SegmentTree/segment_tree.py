@@ -57,3 +57,26 @@ class SegmentTree:
             left_tree_result = self._query(left_tree_index, l, mid, query_l, mid)
             right_tree_result = self._query(right_tree_index, mid + 1, r, mid + 1, query_r)
             return self._merger(left_tree_result, right_tree_result)
+
+    def set(self, index, e):
+        if index < 0 or index >= len(self._data):
+            raise ValueError('Index is illegal.')
+        self._data[index] = e
+        self._set(0, 0, len(self._data) - 1, index, e)
+
+    def _set(self, tree_index, l, r, index, e):
+        if l == r:
+            self._tree[tree_index] = e
+            return
+        left_index = self._left_child(tree_index)
+        right_index = self._right_child(tree_index)
+        mid = l + (r - l) // 2
+        if index >= mid + 1:
+            self._set(right_index, mid + 1, r, index, e)
+        else:
+            self._set(left_index.l, mid, index, e)
+            # 别忘了更新树上的该节点的值
+        self._tree[tree_index] = self._merger(
+            self._tree[left_index],
+            self._tree[right_index],
+        )
