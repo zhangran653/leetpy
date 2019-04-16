@@ -74,5 +74,24 @@ class NumArray(object):
             return self._merger(left_result, right_result)
 
 
+class NumArray2(object):
+
+    def __init__(self, nums):
+        """
+        :type nums: List[int]
+        """
+        self._sum = [0] + nums
+        for i in range(1, len(self._sum)):
+            self._sum[i] = self._sum[i - 1] + nums[i - 1]
+
+    def sumRange(self, i, j):
+        """
+        :type i: int
+        :type j: int
+        :rtype: int
+        """
+        return self._sum[j + 1] - self._sum[i]
+
+
 if __name__ == '__main__':
     print(NumArray([]).sumRange(0, 2))
