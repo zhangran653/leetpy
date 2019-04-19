@@ -46,7 +46,7 @@ class MaxHeap:
         e = self.find_max()
         self._data.swap(0, self._data.get_size() - 1)
         self._data.remove_last()
-        self._sift_down()
+        self._sift_down(0)
         return e
 
     def find_max(self):

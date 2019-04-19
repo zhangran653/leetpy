@@ -1,7 +1,9 @@
-from chapter_11_UnionFind.base import UF
 
 
 # Sixth version - path compression
+from c11_UnionFind.base import UF
+
+
 class UnionFind6(UF):
     def __init__(self, size):
         # rank[i]表示以i为根的树的层数(深度)
