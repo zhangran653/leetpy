@@ -1,3 +1,4 @@
+# ------- merge sort --------
 def merge_sort(arr):
     _merge_sort(arr, 0, len(arr) - 1)
 
@@ -8,19 +9,11 @@ def _merge_sort(arr, l, r):
     mid = l + (r - l) // 2
     _merge_sort(arr, l, mid)
     _merge_sort(arr, mid + 1, r)
-    if arr[mid] > arr[mid + 1]:
+    if arr[mid + 1] < arr[mid]:
         _merge(arr, l, mid, r)
 
 
 def _merge(arr, l, mid, r):
-    """
-    将arr[l,mid]和arr[mid+1,r]两部分进行归并
-    :param arr:
-    :param l:
-    :param mid:
-    :param r:
-    :return:
-    """
     aux = arr[l:r + 1]
     i = l
     j = mid + 1
@@ -39,7 +32,11 @@ def _merge(arr, l, mid, r):
             j += 1
 
 
+# -------- merge sort --------
+
+
 if __name__ == '__main__':
-    a = [28, 6, 3, 123, 5, 3, 23, 54, 1, 34]
+    a = [354, 23, 65, 43, 1, 456, 43, 32, 76, 43, 675, 43, 23]
+
     merge_sort(a)
     print(a)
