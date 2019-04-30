@@ -1,7 +1,12 @@
 """
-快速排序 v2
+快速排序 v3
 随机选取标定点
 
+选择i，j
+arr[l,i] <= arr[l]
+arr[j,r] >= arr[l]
+
+这样对于值=arr[l] 将平均分在两边
 
 """
 import random
